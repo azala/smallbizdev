@@ -13,6 +13,7 @@ ACCOUNT_ID = 1607343250
 IN_PRODUCTION = False
 
 preapproval_id = None
+saved_data = {}
 
 users = {
     "Alice" : {
@@ -30,27 +31,36 @@ class SuccessHandler(tornado.web.RequestHandler):
 
 class NewInvoiceHandler(tornado.web.RequestHandler):
     def post(self):
-        data = json.loads(self.request.body)
-
+        saved_data.extend(json.loads(self.request.body))
         wepay = WePay(IN_PRODUCTION, ACCESS_TOKEN)
         response = wepay.call('/preapproval/create', {
             'account_id': ACCOUNT_ID,
             'period': 'once',
-            'amount': data['amount'],
+            'amount': saved_data['amount'],
             'mode': 'regular',
-            'short_description': data['desc'],
+            'short_description': saved_data['desc'],
             'redirect_uri': 'http://54.84.158.190:8888/success'
         })
-
         preapproval_id = response['preapproval_id']
-
         self.write(response)
-        
+
+class GrabHandler(tornado.web.RequestHandler):
+    def post(self):
+        wepay = WePay(IN_PRODUCTION, ACCESS_TOKEN)
+        response = wepay.call('/checkout/create', {
+            'account_id': ACCOUNT_ID,
+            'amount': saved_data['amount'],
+            'short_description': saved_data['desc'],
+            'type': 'GOODS',
+            'preapproval_id': preapproval_id
+        })
+        self.write(response)
 
 application = tornado.web.Application([
     (r"/", MainHandler),
     (r"/new", NewInvoiceHandler),
-    (r"/success", SuccessHandler)
+    (r"/success", SuccessHandler),
+    (r"/grab", GrabHandler)
 ])
 
 if __name__ == "__main__":
