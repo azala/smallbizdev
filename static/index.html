@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script src="js/jquery-1.9.1.min.js"></script>
+        <script src="js/jquery.mobile-1.3.1.min.js"></script>
+        <script src="js/ajax.js"></script>
+        <link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet">
+        <meta name="msapplication-tap-highlight" content="no" />
+        <title>Traxtion</title>
+    </head>
+    <body>
+
+        <div data-role="page" data-control-title="Login" id="page-login">
+          <div data-role="content" style="text-align:center;">
+            <img src="img/traxtion.svg" style="width:80%;height:150px">
+          </div>
+
+          <div data-role="content">
+            <form id="form-login" method="POST" action="">
+            <div data-role="fieldcontain" datacontroltype="textinput">
+              <label for="username">Username: </label>
+              <input name="username" id="username" type="text">
+            </div>
+            <div data-role="fieldcontain" datacontroltype="textinput">
+              <label for="userpwd">Password: </label>
+              <input name="userpwd" id="userpwd" type="password">
+            </div>
+            <a id="btn-login" type="submit" data-role="button" data-transition="slide" href="#page-select">
+              Login
+            </a>
+            <a id="btn-sign-up" data-role="button" data-transition="flip" href="sign-up">
+              Sign Up
+            </a>
+            </form>
+          </div>
+        </div>
+
+        <div data-role="page" data-control-title="Selection" id="page-select">
+          <div data-theme="b" data-role="header">
+            <h3>Welcome, Jason</h3>
+          </div>
+          <a data-role="button" data-transition="slide" href="#submit-invoice">Most Recent Service</a>
+          <a data-role="button" data-transition="slide" href="#contract-list">Contracts List</a>
+        </div>
+
+        <div data-role="page" data-control-title="List" id="contract-list">
+          <div data-theme="b" data-role="header">
+            <a data-role="button" href="#"
+               data-icon="minus" class="ui-btn-left">
+               Remove
+            </a>
+            <a data-role="button" href="#upload-contract"
+               data-icon="plus" class="ui-btn-right">
+               Add
+            </a>
+            <h3>List of Contracts</h3>
+
+            <div data-role="content">
+              <!-- <ul id="contract&#45;list" data&#45;role="listview" data&#45;filter="true" data&#45;divider&#45;theme="b" data&#45;inset="false"> -->
+              <ul id="contract-list" data-role="listview" data-filter="true" data-divider-theme="b" data-inset="false">
+                  <li data-theme="c">
+                      <a href="#submit-invoice" data-transition="slide" data-icon="arrow-r">
+                         <h4>Gree, </h4>
+                         <p>Service date: 5/24/2014</p>
+                      </a>
+                  </li>
+                  <li data-theme="c">
+                      <a href="#submit-invoice" data-transition="slide" data-icon="arrow-r">
+                         <h4>Podomatics,</h4>
+                         <p>Service date: 6/15/2014</p>
+                      </a>
+                  </li>
+                  <li data-theme="c">
+                      <a href="#submit-invoice" data-transition="slide" data-icon="arrow-r">
+                         <h4>Capital One,</h4>
+                         <p>Service date: 6/17/2014</p>
+                      </a>
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div data-role="page" data-control-title="Selection" id="upload-contract">
+          <div data-theme="b" data-role="header">
+            <h3>Upload Contracts</h3>
+          </div>
+          <div data-role="content">
+             <div data-role="fieldcontain" datacontroltype="textinput">
+                <label for="payer-name">Payer Name</label><br>
+                <input name="payer-name" id="text-basic" value="" type="text">
+             </div>
+             <div data-role="fieldcontain" datacontroltype="textinput">
+                <label for="contract-length">Contract Length</label><br>
+                <input name="contract-length" id="text-basic" value="" type="text">
+             </div>
+             <div data-role="fieldcontain" datacontroltype="textinput">
+                <label for="amount">Payment Amount</label><br>
+                <input name="amount" id="text-basic" value="" type="text">
+             </div>
+             <div data-role="fieldcontain" datacontroltype="textinput">
+                <label for="desc">Description</label><br>
+                <input name="desc" id="text-basic" value="" type="text">
+             </div>
+             <div data-role="navbar">
+               <ul>
+                 <li><a href="#upload" data-transition="slide" data-role="button">Upload</a></li>
+                 <li><a href="#return" data-transition="none" data-role="button">Return</a></li>
+               </ul>
+             </div>
+          </div>
+        </div>
+
+        <div id="contract-details" data-role="page"
+             data-control-title="ContractDetails" >
+          <div data-theme="b" data-role="header">
+            <h3>Contract Details</h3>
+          </div>
+          <div data-role="content">
+              <h3>Gree, </h3>
+              <p>Customer: Gree</p>
+              <p>Service Date: 5/24/2014</p>
+              <p>Price: $250.00</p>
+              <p>Length of Contract: 60 days</p>
+              <p>Ref Id: 350098789889</p>
+          </div>
+          <a data-role="button" data-transition="slide" href="#" class="ui-btn-left">
+               Submit
+            </a>
+            <a data-role="button" data-transition="none" href="#" class="ui-btn-right">
+               Back
+            </a>
+        </div>
+
+        <div data-role="page" data-control-title="Submit Invoice" id="submit-invoice">
+          <div data-theme="b" data-role="header">
+            <h3>Submit Invoice</h3>
+          </div>
+          <div data-role="content">
+             <div data-role="fieldcontain" datacontroltype="textinput">
+                <label for="service-provided">Service Provided</label><br>
+                <input name="service-provided" id="text-basic" value="" type="text">
+             </div>
+             <div data-role="fieldcontain" datacontroltype="textinput">
+                <label for="date">Service Date</label><br>
+                <input name="service-date" id="text-basic" value="" type="text">
+             </div>
+             <div data-role="fieldcontain" datacontroltype="textinput">
+                <label for="hours">Payment Date</label><br>
+                <input name="payment-date" id="text-basic" value="" type="text">
+             </div>
+            <div class="ui-field-contain">
+               <label for="comments">Comments</label><br>
+                <textarea cols="40" rows="8" name="comments" id="textarea-1"></textarea>
+            </div>
+            <br>
+             <div data-role="navbar">
+               <a href="#popup-submit" id="submit-invoice" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-transition="pop">Submit</a>
+               <a href="#page-select" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-transition="slide">Return</a>
+               <div data-role="popup" id="popup-submit">
+                  <p>Invoice Submitted</p>
+               </div>
+             </div>
+          </div>
+        </div>
+
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
+</html>
