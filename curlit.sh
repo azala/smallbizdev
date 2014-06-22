@@ -1,1 +1,1 @@
-curl -H "Content-Type: application/json" -d '{"username":"xyz","password":"xyz"}' http://54.84.158.190:8888/login
+curl -H "Content-Type: application/json" -d '{"amount":"29.99","desc":"tester"}' http://54.84.158.190:8888/new
