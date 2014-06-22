@@ -39,8 +39,11 @@ class NewInvoiceHandler(tornado.web.RequestHandler):
             'amount': data['amount'],
             'mode': 'regular',
             'short_description': data['desc'],
-            'redirect_uri': 'http://54.84.158.190:8888/success/'
+            'redirect_uri': 'http://54.84.158.190:8888/success'
         })
+
+        preapproval_id = response['preapproval_id']
+
         self.write(response)
         
 
