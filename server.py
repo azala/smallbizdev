@@ -2,7 +2,7 @@
 
 import tornado.ioloop
 import tornado.web
-import json
+import json, time, os
 from wepay import WePay
 from wepay.exceptions import WePayError
 
@@ -15,15 +15,10 @@ IN_PRODUCTION = False
 preapproval_id = None
 saved_data = {}
 
-users = {
-    "Alice" : {
-        "password" : "Alice"
-    }
-}
-
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Hello world")
+        print "hi"
 
 class SuccessHandler(tornado.web.RequestHandler):
     def get(self):
@@ -43,7 +38,7 @@ class NewInvoiceHandler(tornado.web.RequestHandler):
         })
         preapproval_id = response['preapproval_id']
 
-        d = json.loads(response)
+        d = response
         ret = json.dumps({
             'url' : d['preapproval_uri']
             })
@@ -61,12 +56,12 @@ class GrabHandler(tornado.web.RequestHandler):
             'preapproval_id': preapproval_id
         })
 
-        d = json.loads(response)
+        d = response
         ret = json.dumps({
             'url' : d['checkout_uri']
             })
-        
-        self.write(response)
+
+        self.write(ret)
 
 application = tornado.web.Application([
     (r"/", MainHandler),
