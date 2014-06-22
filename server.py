@@ -14,18 +14,23 @@ IN_PRODUCTION = False
 
 preapproval_id = None
 saved_data = {}
+wake_time = None
+sleep_time = None
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Hello world")
-        print "hi"
 
 class SuccessHandler(tornado.web.RequestHandler):
     def get(self):
+        global wake_time, sleep_time
+        wake_time = time.time() + sleep_time
         self.write("Success!")
+        
 
 class NewInvoiceHandler(tornado.web.RequestHandler):
     def post(self):
+        global sleep_time
         saved_data.update(json.loads(self.request.body))
         wepay = WePay(IN_PRODUCTION, ACCESS_TOKEN)
         response = wepay.call('/preapproval/create', {
@@ -36,6 +41,7 @@ class NewInvoiceHandler(tornado.web.RequestHandler):
             'short_description': saved_data['desc'],
             'redirect_uri': 'http://54.84.158.190:8888/success'
         })
+        sleep_time = int(saved_data['time'])
         preapproval_id = response['preapproval_id']
 
         d = response
@@ -63,6 +69,13 @@ class GrabHandler(tornado.web.RequestHandler):
 
         self.write(ret)
 
+def periodic():
+    global wake_time
+    if wake_time and wake_time < time.time():
+        print "Trigger capture."
+        os.system('./grabit.sh')
+        wake_time = None
+
 application = tornado.web.Application([
     (r"/", MainHandler),
     (r"/new", NewInvoiceHandler),
@@ -72,4 +85,7 @@ application = tornado.web.Application([
 
 if __name__ == "__main__":
     application.listen(8888)
-    tornado.ioloop.IOLoop.instance().start()
+    main_loop = tornado.ioloop.IOLoop.instance()
+    ping_loop = tornado.ioloop.PeriodicCallback(periodic, 100, io_loop=main_loop)
+    ping_loop.start()
+    main_loop.start()
