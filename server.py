@@ -31,7 +31,7 @@ class SuccessHandler(tornado.web.RequestHandler):
 
 class NewInvoiceHandler(tornado.web.RequestHandler):
     def post(self):
-        saved_data.extend(json.loads(self.request.body))
+        saved_data.update(json.loads(self.request.body))
         wepay = WePay(IN_PRODUCTION, ACCESS_TOKEN)
         response = wepay.call('/preapproval/create', {
             'account_id': ACCOUNT_ID,
@@ -42,7 +42,13 @@ class NewInvoiceHandler(tornado.web.RequestHandler):
             'redirect_uri': 'http://54.84.158.190:8888/success'
         })
         preapproval_id = response['preapproval_id']
-        self.write(response)
+
+        d = json.loads(response)
+        ret = json.dumps({
+            'url' : d['preapproval_uri']
+            })
+
+        self.write(ret)
 
 class GrabHandler(tornado.web.RequestHandler):
     def post(self):
@@ -54,6 +60,12 @@ class GrabHandler(tornado.web.RequestHandler):
             'type': 'GOODS',
             'preapproval_id': preapproval_id
         })
+
+        d = json.loads(response)
+        ret = json.dumps({
+            'url' : d['checkout_uri']
+            })
+        
         self.write(response)
 
 application = tornado.web.Application([
