@@ -1,1 +1,1 @@
-rsync -avz -e ssh . --exclude '.git' hackathon:hackathon
+rsync -avz -e ssh . --exclude '.git' ec2:hackathon
