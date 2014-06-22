@@ -15,15 +15,20 @@
 //   });
 // });
 
-$("#upload").on("click", function() {
-  $.ajax(type:"POST"
-    , amount: "29.99"
-    , dataType: "application/json"
+$("#c_upload").on("click", function() {
+  var s = JSON.stringify({
+      amount: $("#amount").val(),
+      desc: $("#desc").val(),
+      time: $("#time").val()
+    });
+  $.ajax({
+    type:"POST"
+    , contentType: "application/json"
     , url: "http://54.84.158.190:8888/new"
-    , desc: "tester"
-    , time: "15"
+    , data: s
     , success: function(data){
-         window.location.replace(data.url)
+         window.location.replace(JSON.parse(data).url)
       }
     });
 });
+

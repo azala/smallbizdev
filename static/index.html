@@ -26,7 +26,6 @@
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <script src="js/jquery-1.9.1.min.js"></script>
         <script src="js/jquery.mobile-1.3.1.min.js"></script>
-        <script src="js/ajax.js"></script>
         <link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet">
         <meta name="msapplication-tap-highlight" content="no" />
         <title>Traxtion</title>
@@ -60,7 +59,7 @@
 
         <div data-role="page" data-control-title="Selection" id="page-select">
           <div data-theme="b" data-role="header">
-            <h3>Welcome, Jason</h3>
+            <h3>Welcome, Mike</h3>
           </div>
           <a data-role="button" data-transition="slide" href="#submit-invoice">Most Recent Service</a>
           <a data-role="button" data-transition="slide" href="#contract-list">Contracts List</a>
@@ -110,24 +109,24 @@
           </div>
           <div data-role="content">
              <div data-role="fieldcontain" datacontroltype="textinput">
-                <label for="payer-name">Payer Name</label><br>
-                <input name="payer-name" id="text-basic" value="" type="text">
+                <label for="payer_name">Payer Name</label><br>
+                <input id="payer_name" value="" type="text">
              </div>
              <div data-role="fieldcontain" datacontroltype="textinput">
-                <label for="contract-length">Contract Length</label><br>
-                <input name="contract-length" id="text-basic" value="" type="text">
+                <label for="time">Invoice Time Until Due</label><br>
+                <input id="time" value="" type="text">
              </div>
              <div data-role="fieldcontain" datacontroltype="textinput">
                 <label for="amount">Payment Amount</label><br>
-                <input name="amount" id="text-basic" value="" type="text">
+                <input id="amount" value="" type="text">
              </div>
              <div data-role="fieldcontain" datacontroltype="textinput">
                 <label for="desc">Description</label><br>
-                <input name="desc" id="text-basic" value="" type="text">
+                <input id="desc" value="" type="text">
              </div>
              <div data-role="navbar">
                <ul>
-                 <li><a href="#upload" data-transition="slide" data-role="button">Upload</a></li>
+                 <li><a href="#upload" data-transition="slide" data-role="button" id="c_upload">Upload</a></li>
                  <li><a href="#return" data-transition="none" data-role="button">Return</a></li>
                </ul>
              </div>
@@ -188,6 +187,7 @@
         </div>
 
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/ajax.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>

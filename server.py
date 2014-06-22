@@ -75,7 +75,7 @@ class IntroHandler(tornado.web.RequestHandler):
         self.redirect('static/index.html')
 
 application = tornado.web.Application([
-    (r"/", MainHandler),
+    (r"/confirm", MainHandler),
     (r"/new", NewInvoiceHandler),
     (r"/success", SuccessHandler),
     (r"/intro", IntroHandler)
