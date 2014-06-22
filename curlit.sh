@@ -1,1 +1,1 @@
-curl -H "Content-Type: application/json" -d '{"username":"xyz","password":"xyz"}' http://localhost:5000/login
+curl -H "Content-Type: application/json" -d '{"username":"xyz","password":"xyz"}' http://54.84.158.190:8888/login
